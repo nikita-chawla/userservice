@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: userservice-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: userservice
+  template:
+    metadata:
+      labels:
+        app: userservice
+    spec:
+      containers:
+        - name: userservice
+          image: nikitachawla/userservice:latest
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql-service:3306/new_schema  # Assuming MySQL service name is "mysql-service"
+            - name: SPRING_DATASOURCE_USERNAME
+              value: root
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: Karan@2024!@
+            - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+              value: com.mysql.cj.jdbc.Driver
+            - name: MYSQL_ROOT_PASSWORD
+              value: Karan@2024!@  # Replace with a strong password
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: "yes"
+          ports:
+            - containerPort: 8081
