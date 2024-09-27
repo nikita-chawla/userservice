@@ -41,7 +41,7 @@ public class LogAspect {
 
         // Capture request details
         String method = request.getMethod();
-        String requestURI = request.getRequestURI();
+        String requestURI = String.valueOf(request.getRequestURL());
         String queryString = request.getQueryString();
 
         // Collect headers
@@ -71,7 +71,7 @@ public class LogAspect {
         // Proceed with the original method execution
         Object result = joinPoint.proceed();
        logger.info("This method is successful -> requestURI: {}, httpMethod: {}, Response Status: {}, Response: {}",
-                requestURI, method, response.getStatus(), objectMapper.writeValueAsString(result));
+                request.getRequestURI(), method, response.getStatus(), objectMapper.writeValueAsString(result));
 
 
         return result;
